@@ -1,0 +1,21 @@
+.Counter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.Counter-header {
+  font-size: large;
+}
+
+.Counter-header p {
+  margin: 0;
+}
+
+.Counter-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
