@@ -1,14 +1,33 @@
 import moment from "moment";
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+
+import { IntlProvider, addLocaleData } from "react-intl";
+
 import "./Counter.css";
 import CounterItem from "./../../components/CounterItem/CounterItem";
+
+import en from "react-intl/locale-data/en";
+import de from "react-intl/locale-data/de";
+
+import translationsEN from "./../../lang/locale-en.json";
+import translationsDE from "./../../lang/locale-de.json";
+
+const translations = {
+  "en-US": translationsEN,
+  "de-AT": translationsDE
+};
 
 class Counter extends Component {
   constructor(props) {
     super(props);
+    addLocaleData([...en, ...de]);
 
+    // TODO
+    // to enable months, uncomment line 29 & line 50
     this.state = {
       countdown: {
+        // months: null,
         days: null,
         hours: null,
         minutes: null,
@@ -19,17 +38,23 @@ class Counter extends Component {
 
   componentDidMount() {
     const blackFriday = this.resolveBlackFridayDate(moment().year());
+    this.updateTimer(blackFriday);
     setInterval(() => {
-      const duration = moment.duration(blackFriday.diff(moment()));
-      this.setState({
-        countdown: {
-          days: Math.trunc(duration.asDays()),
-          hours: ("0" + duration.hours()).slice(-2),
-          minutes: ("0" + duration.minutes()).slice(-2),
-          seconds: ("0" + duration.seconds()).slice(-2)
-        }
-      });
+      this.updateTimer(blackFriday);
     }, 1000);
+  }
+
+  updateTimer(blackFriday) {
+    const duration = moment.duration(blackFriday.diff(moment()));
+    this.setState({
+      countdown: {
+        // months: Math.trunc(duration.asMonths()),
+        days: Math.trunc(duration.asDays()),
+        hours: ("0" + duration.hours()).slice(-2),
+        minutes: ("0" + duration.minutes()).slice(-2),
+        seconds: ("0" + duration.seconds()).slice(-2)
+      }
+    });
   }
 
   resolveBlackFridayDate(year) {
@@ -52,20 +77,33 @@ class Counter extends Component {
 
   render() {
     const { countdown } = this.state;
+    const { langId } = this.props;
 
     return (
-      <div className="Counter">
-        <header className="Counter-header">
-          <p>To get started</p>
-        </header>
-        <main className="Counter-items">
-          {Object.keys(countdown).map(key => {
-            return <CounterItem value={countdown[key]} desc={key} />;
-          })}
-        </main>
-      </div>
+      <IntlProvider locale={langId} messages={translations[langId]}>
+        <div className="Counter">
+          <header className="Counter-header">
+            <p>To get started</p>
+          </header>
+          <main className="Counter-items">
+            {Object.keys(countdown).map(key => {
+              return (
+                <CounterItem key={key} value={countdown[key]} desc={key} />
+              );
+            })}
+          </main>
+        </div>
+      </IntlProvider>
     );
   }
 }
+
+Counter.propTypes = {
+  langId: PropTypes.string
+};
+
+Counter.defaultProps = {
+  langId: "en-US"
+};
 
 export default Counter;

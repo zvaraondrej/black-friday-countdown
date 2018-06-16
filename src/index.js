@@ -4,5 +4,5 @@ import "./index.css";
 import Counter from "./containers/Counter/Counter";
 import registerServiceWorker from "./registerServiceWorker";
 
-ReactDOM.render(<Counter />, document.getElementById("root"));
+ReactDOM.render(<Counter langId="de-AT" />, document.getElementById("root"));
 registerServiceWorker();

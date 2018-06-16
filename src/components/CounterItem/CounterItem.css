@@ -13,4 +13,5 @@
 }
 
 .CounterItem-desc {
+  text-transform: uppercase;
 }

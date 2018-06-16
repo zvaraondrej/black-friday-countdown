@@ -1,0 +1,7 @@
+{
+  "CounterItem.months": "{count, plural, one {month} other {months}}",
+  "CounterItem.days": "{count, plural, one {day} other {days}}",
+  "CounterItem.hours": "{count, plural, one {hour} other {hours}}",
+  "CounterItem.minutes": "{count, plural, one {minute} other {minutes}}",
+  "CounterItem.seconds": "{count, plural, one {second} other {seconds}}"
+}
