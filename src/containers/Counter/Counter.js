@@ -1,10 +1,10 @@
 import moment from "moment";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
 import { IntlProvider, addLocaleData } from "react-intl";
 
-import "./Counter.css";
 import CounterItem from "./../../components/CounterItem/CounterItem";
 
 import en from "react-intl/locale-data/en";
@@ -17,6 +17,28 @@ const translations = {
   "en-US": translationsEN,
   "de-AT": translationsDE
 };
+
+const CounterWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+
+const CounterHeader = styled.header`
+  font-size: large;
+`;
+
+const CounterHeaderText = styled.p`
+  margin: 0;
+`;
+
+const CounterItemsWrapper = styled.main`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
 
 class Counter extends Component {
   constructor(props) {
@@ -81,18 +103,18 @@ class Counter extends Component {
 
     return (
       <IntlProvider locale={langId} messages={translations[langId]}>
-        <div className="Counter">
-          <header className="Counter-header">
-            <p>To get started</p>
-          </header>
-          <main className="Counter-items">
+        <CounterWrapper>
+          <CounterHeader>
+            <CounterHeaderText>To get started</CounterHeaderText>
+          </CounterHeader>
+          <CounterItemsWrapper>
             {Object.keys(countdown).map(key => {
               return (
                 <CounterItem key={key} value={countdown[key]} desc={key} />
               );
             })}
-          </main>
-        </div>
+          </CounterItemsWrapper>
+        </CounterWrapper>
       </IntlProvider>
     );
   }
