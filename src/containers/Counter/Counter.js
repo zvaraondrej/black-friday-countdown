@@ -70,8 +70,8 @@ class Counter extends Component {
     const duration = moment.duration(blackFriday.diff(moment()));
     this.setState({
       countdown: {
-        // months: Math.trunc(duration.asMonths()),
-        days: Math.trunc(duration.asDays()),
+        // months: Math.trunc(duration.asMonths()).toString(),
+        days: Math.trunc(duration.asDays()).toString(),
         hours: ("0" + duration.hours()).slice(-2),
         minutes: ("0" + duration.minutes()).slice(-2),
         seconds: ("0" + duration.seconds()).slice(-2)
@@ -124,15 +124,10 @@ class Counter extends Component {
             <CounterSectionText>
               {translationsArr.map((key, index) => {
                 return (
-                  <a
-                    href="#"
-                    role="button"
-                    key={key}
-                    onClick={() => this.setLangId(key)}
-                  >
+                  <button key={key} onClick={() => this.setLangId(key)}>
                     <span>{key}</span>
                     {index !== translationsArr.length - 1 && <span> | </span>}
-                  </a>
+                  </button>
                 );
               })}
             </CounterSectionText>
