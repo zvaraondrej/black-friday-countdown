@@ -1,15 +1,13 @@
 import moment from "moment";
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import { IntlProvider, addLocaleData } from "react-intl";
+import { IntlProvider, addLocaleData, FormattedMessage } from "react-intl";
 
 import CounterItem from "./../../components/CounterItem/CounterItem";
 
 import en from "react-intl/locale-data/en";
 import de from "react-intl/locale-data/de";
-
 import translationsEN from "./../../lang/locale-en.json";
 import translationsDE from "./../../lang/locale-de.json";
 
@@ -26,12 +24,14 @@ const CounterWrapper = styled.div`
   height: 100%;
 `;
 
-const CounterHeader = styled.header`
+const CounterSection = styled.header`
+  width: 100%;
   font-size: large;
+  text-transform: uppercase;
 `;
 
-const CounterHeaderText = styled.p`
-  margin: 0;
+const CounterSectionText = styled.p`
+  margin: 0 10px;
 `;
 
 const CounterItemsWrapper = styled.main`
@@ -45,7 +45,6 @@ class Counter extends Component {
     super(props);
     addLocaleData([...en, ...de]);
 
-    // TODO
     // to enable months, uncomment line 29 & line 50
     this.state = {
       countdown: {
@@ -54,7 +53,8 @@ class Counter extends Component {
         hours: null,
         minutes: null,
         seconds: null
-      }
+      },
+      langId: Object.keys(translations)[0]
     };
   }
 
@@ -80,7 +80,7 @@ class Counter extends Component {
   }
 
   resolveBlackFridayDate(year) {
-    // BF is always after Thanksgiving
+    // BF is always after ThanksGiving
     // TG is always fourth Wednesday in November
     const wednesdayIndex = 4;
 
@@ -97,16 +97,22 @@ class Counter extends Component {
     return firstWednesday.add(3, "w").add(1, "d");
   }
 
+  setLangId = langId => {
+    this.setState({ langId });
+  };
+
   render() {
-    const { countdown } = this.state;
-    const { langId } = this.props;
+    const { countdown, langId } = this.state;
+    const translationsArr = Object.keys(translations);
 
     return (
       <IntlProvider locale={langId} messages={translations[langId]}>
         <CounterWrapper>
-          <CounterHeader>
-            <CounterHeaderText>To get started</CounterHeaderText>
-          </CounterHeader>
+          <CounterSection>
+            <CounterSectionText>
+              <FormattedMessage id="CounterHeader.message" />
+            </CounterSectionText>
+          </CounterSection>
           <CounterItemsWrapper>
             {Object.keys(countdown).map(key => {
               return (
@@ -114,18 +120,27 @@ class Counter extends Component {
               );
             })}
           </CounterItemsWrapper>
+          <CounterSection>
+            <CounterSectionText>
+              {translationsArr.map((key, index) => {
+                return (
+                  <a
+                    href="#"
+                    role="button"
+                    key={key}
+                    onClick={() => this.setLangId(key)}
+                  >
+                    <span>{key}</span>
+                    {index !== translationsArr.length - 1 && <span> | </span>}
+                  </a>
+                );
+              })}
+            </CounterSectionText>
+          </CounterSection>
         </CounterWrapper>
       </IntlProvider>
     );
   }
 }
-
-Counter.propTypes = {
-  langId: PropTypes.string
-};
-
-Counter.defaultProps = {
-  langId: "en-US"
-};
 
 export default Counter;

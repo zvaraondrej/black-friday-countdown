@@ -1,4 +1,5 @@
 {
+  "CounterHeader.message": "Starten im",
   "CounterItem.months": "{count, plural, one {monat} other {monaten}}",
   "CounterItem.days": "{count, plural, one {tag} other {tage}}",
   "CounterItem.hours": "{count, plural, one {stunde} other {stunden}}",
