@@ -4,8 +4,8 @@ import moment from "moment";
 
 import { FormattedMessage } from "react-intl";
 
-import Counter from "./Counter";
-import CounterItem from "./../../components/CounterItem/CounterItem";
+import Counter, { CounterLangBtn } from "./Counter";
+import CounterItem from "./../CounterItem/CounterItem";
 
 describe("Component Counter", () => {
   let el = undefined;
@@ -30,7 +30,7 @@ describe("Component Counter", () => {
     });
 
     it("two lang switch buttons", () => {
-      // shallow(<Counter />);
+      expect(setup().find(CounterLangBtn).length).toBe(2);
     });
   });
 

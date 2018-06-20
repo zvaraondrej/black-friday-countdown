@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 import { FormattedMessage } from "react-intl";
 
@@ -11,7 +12,7 @@ const CounterItemWrapper = styled.div`
   text-align: center;
 `;
 
-const CounterItemValue = styled.div`
+export const CounterItemValue = styled.div`
   font-size: 60px;
   padding: 8px 0px;
 `;
@@ -34,6 +35,16 @@ const CounterItem = props => {
       </CounterItemDesc>
     </CounterItemWrapper>
   );
+};
+
+CounterItem.propTypes = {
+  desc: PropTypes.string,
+  value: PropTypes.string
+};
+
+CounterItem.defaultProps = {
+  desc: "",
+  value: ""
 };
 
 export default CounterItem;

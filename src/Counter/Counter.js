@@ -4,12 +4,12 @@ import styled from "styled-components";
 
 import { IntlProvider, addLocaleData, FormattedMessage } from "react-intl";
 
-import CounterItem from "./../../components/CounterItem/CounterItem";
+import CounterItem from "./../CounterItem/CounterItem";
 
 import en from "react-intl/locale-data/en";
 import de from "react-intl/locale-data/de";
-import translationsEN from "./../../lang/locale-en.json";
-import translationsDE from "./../../lang/locale-de.json";
+import translationsEN from "./../lang/locale-en.json";
+import translationsDE from "./../lang/locale-de.json";
 
 const translations = {
   "en-US": translationsEN,
@@ -40,12 +40,20 @@ const CounterItemsWrapper = styled.main`
   justify-content: center;
 `;
 
+export const CounterLangBtn = styled.button`
+  border: 1px solid #000000;
+  background: none;
+  padding: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+`;
+
 class Counter extends Component {
   constructor(props) {
     super(props);
     addLocaleData([...en, ...de]);
 
-    // to enable months, uncomment line 29 & line 50
+    // to enable months, uncomment line 59 & line 81
     this.state = {
       countdown: {
         // months: null,
@@ -124,10 +132,9 @@ class Counter extends Component {
             <CounterSectionText>
               {translationsArr.map((key, index) => {
                 return (
-                  <button key={key} onClick={() => this.setLangId(key)}>
-                    <span>{key}</span>
-                    {index !== translationsArr.length - 1 && <span> | </span>}
-                  </button>
+                  <CounterLangBtn key={key} onClick={() => this.setLangId(key)}>
+                    {key}
+                  </CounterLangBtn>
                 );
               })}
             </CounterSectionText>
